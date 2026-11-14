@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="JAPAN HIROBAの更衣室ご利用案内。安全な移動、戻る操作、忘れ物とプライバシーに関する注意事項を日本語・英語でご案内します。">
+  <meta name="color-scheme" content="light">
+  <title>更衣室ご利用案内 / Dressing Room Guide — JAPAN HIROBA</title>
+  <style>
+    :root { --paper:#f6f5ef; --ink:#203d35; --muted:#52665e; --line:#d5ded5; --green:#24594a; --soft:#e9efe7; --gold:#87601e; --warm:#fff4db; --white:#fffefa; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:24px; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; line-height:1.85; }
+    a { color:var(--green); text-underline-offset:4px; }
+    a:hover { text-decoration-thickness:2px; }
+    a:focus-visible { outline:3px solid var(--gold); outline-offset:5px; }
+    .skip { position:absolute; top:-100px; left:16px; background:var(--white); padding:12px; z-index:2; }
+    .skip:focus { top:12px; }
+    .wrap { width:min(1080px, calc(100% - 64px)); margin-inline:auto; }
+    header { border-bottom:1px solid var(--line); }
+    .masthead { display:flex; justify-content:space-between; align-items:center; gap:24px; padding-block:22px; }
+    .brand { font-family:Georgia, "Times New Roman", serif; font-size:20px; letter-spacing:.11em; line-height:1.4; }
+    .edition { color:var(--muted); font-size:12px; text-align:right; }
+    .hero { padding:64px 0 44px; display:grid; grid-template-columns:1fr 250px; gap:48px; align-items:end; }
+    .eyebrow { margin:0 0 18px; color:var(--green); font-size:12px; letter-spacing:.15em; font-weight:700; }
+    h1 { margin:0; font-family:"Yu Mincho", "Hiragino Mincho ProN", serif; font-size:clamp(30px, 4.2vw, 48px); font-weight:500; line-height:1.55; letter-spacing:.035em; }
+    .subtitle { margin:16px 0 0; font-family:Georgia, serif; font-size:22px; line-height:1.5; }
+    .intro { margin:20px 0 0; max-width:660px; }
+    .en { display:block; color:var(--muted); font-size:.9em; line-height:1.7; margin-top:6px; font-weight:400; letter-spacing:normal; }
+    .hero-note { border-left:2px solid var(--green); padding:0 0 0 20px; font-size:14px; }
+    .hero-note strong { display:block; font-size:16px; }
+    nav { display:flex; flex-wrap:wrap; gap:8px 24px; padding:20px 0; margin-bottom:36px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    nav a { font-size:13px; text-decoration:none; }
+    .priority { background:var(--green); color:var(--white); padding:30px 34px; border-radius:3px; }
+    .priority h2 { margin:0 0 14px; font-size:21px; }
+    .priority .en { color:#e0eae2; }
+    .priority p { margin:0; }
+    .priority p + p { margin-top:18px; padding-top:18px; border-top:1px solid #ffffff35; }
+    section { padding:44px 0; border-bottom:1px solid var(--line); }
+    .section-heading { display:flex; gap:18px; align-items:baseline; margin-bottom:26px; }
+    .number { color:var(--green); font-family:Georgia, serif; font-size:30px; line-height:1; }
+    h2 { margin:0; font-size:23px; font-weight:600; line-height:1.55; }
+    h2 .en { font-family:Georgia, serif; font-size:17px; }
+    h3 { margin:0 0 10px; font-size:17px; line-height:1.65; }
+    p { margin:0 0 16px; }
+    p:last-child { margin-bottom:0; }
+    .steps { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; list-style:none; padding:0; margin:0; counter-reset:steps; }
+    .steps li { counter-increment:steps; padding:24px; background:var(--white); border:1px solid var(--line); }
+    .steps li::before { content:"STEP 0" counter(steps); display:block; color:var(--green); font-size:11px; letter-spacing:.15em; margin-bottom:16px; font-weight:700; }
+    .steps p { font-size:14px; }
+    .return-label { display:block; background:var(--soft); border-left:3px solid var(--green); padding:10px 12px; font-size:13px; line-height:1.65; margin-top:16px; }
+    .rules { display:grid; grid-template-columns:1fr 1fr; gap:0 36px; }
+    .rule { padding:22px 0; border-top:1px solid var(--line); }
+    .rule p { font-size:14px; }
+    .note { background:var(--warm); border-left:3px solid var(--gold); padding:20px 24px; margin-top:26px; font-size:14px; }
+    .note strong { color:#684715; }
+    .manners { padding:0; margin:0; list-style:none; }
+    .manners li { position:relative; padding:16px 0 16px 24px; border-top:1px solid var(--line); }
+    .manners li::before { content:""; position:absolute; left:2px; top:29px; width:6px; height:6px; border-radius:50%; background:var(--green); }
+    .escape { display:grid; grid-template-columns:1fr 300px; gap:32px; align-items:center; padding:30px; background:var(--soft); }
+    .escape h3 { font-size:20px; }
+    .destination { padding:22px; background:var(--white); border:1px solid var(--line); }
+    .destination small { display:block; color:var(--muted); }
+    .coordinates { display:block; font-family:Georgia, serif; font-size:28px; margin:6px 0 16px; line-height:1.4; }
+    .button { display:block; padding:12px 14px; background:var(--green); color:white; text-decoration:none; text-align:center; font-size:14px; line-height:1.6; border-radius:3px; }
+    .button:hover { background:#193f34; }
+    .button .en { color:white; margin-top:0; font-size:12px; }
+    .trouble { margin-top:24px; font-size:14px; }
+    footer { padding:28px 0 40px; color:var(--muted); font-size:12px; }
+    .footer-row { display:flex; justify-content:space-between; gap:20px; }
+    @media (max-width:760px) {
+      .wrap { width:calc(100% - 36px); }
+      .masthead { gap:12px; }
+      .brand { font-size:16px; }
+      .edition { font-size:10px; }
+      .hero { grid-template-columns:1fr; gap:26px; padding:38px 0 30px; }
+      .hero-note { max-width:100%; }
+      .subtitle { font-size:20px; }
+      nav { gap:12px 20px; margin-bottom:26px; }
+      .priority { padding:24px; }
+      .priority h2 { font-size:19px; }
+      section { padding-block:34px; }
+      .steps, .rules, .escape { grid-template-columns:1fr; }
+      .steps { gap:12px; }
+      .steps li { padding:22px; }
+      .section-heading { gap:14px; }
+      h2 { font-size:21px; }
+      .escape { padding:24px; gap:24px; }
+      .footer-row { flex-direction:column; gap:8px; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    @media print {
+      body { background:white; font-size:10pt; }
+      .wrap { width:100%; }
+      .hero { padding-top:20px; grid-template-columns:1fr; gap:16px; }
+      h1 { font-size:26pt; }
+      nav, .skip { display:none; }
+      section { padding-block:22px; }
+      .priority { background:white; color:var(--ink); border:2px solid var(--green); }
+      .priority .en { color:var(--muted); }
+      .priority p + p { border-color:var(--line); }
+      .steps li, .rule, .manners li, .escape, .note { break-inside:avoid; }
+      .escape { grid-template-columns:1fr 260px; }
+      .button { background:white; color:var(--green); border:1px solid var(--green); }
+      .button .en { color:var(--green); }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip" href="#main">本文へ / <span lang="en">Skip to content</span></a>
+  <header>
+    <div class="wrap masthead">
+      <div class="brand" lang="en">JAPAN HIROBA</div>
+      <div class="edition">更衣室ご利用案内<br><span lang="en">DRESSING ROOM GUIDE · JA / EN</span></div>
+    </div>
+  </header>
+  <main class="wrap" id="main">
+    <div class="hero">
+      <div>
+        <p class="eyebrow" lang="en">SAFETY &amp; ETIQUETTE</p>
+        <h1>気持ちよく、安心して<br>着替えるために。</h1>
+        <p class="subtitle" lang="en">A little care. A comfortable change.</p>
+        <p class="intro">移動パッドで利用する、一時設置型の更衣室です。事故や操作間違いを防ぎ、お互いのプライバシーを守るため、ご利用前にお読みください。<span class="en" lang="en">These temporary dressing rooms are accessed by a transport pad. Please read this guide before use to help prevent accidents and respect everyone's privacy.</span></p>
+      </div>
+      <aside class="hero-note">
+        <strong>お一人ずつご利用ください。</strong>
+        <span class="en" lang="en">One person per room.</span>
+        <p style="margin-top:12px">ほかの方が使用中の更衣室には入らないでください。<span class="en" lang="en">Please do not enter a room being used by someone else.</span></p>
+      </aside>
+    </div>
+    <nav aria-label="ページ内案内 / Page navigation">
+      <a href="#howto">使い方 / <span lang="en">How to use</span></a>
+      <a href="#safety">注意事項 / <span lang="en">Safety</span></a>
+      <a href="#manners">利用マナー / <span lang="en">Etiquette</span></a>
+      <a href="#help">退避・困ったとき / <span lang="en">Help</span></a>
+    </nav>
+    <aside class="priority" aria-labelledby="essential-title">
+      <h2 id="essential-title">まず、この2つをお守りください。<span class="en" lang="en">Two things to remember.</span></h2>
+      <p><strong>行きも戻りも、移動中は立ち上がらないでください。</strong><br>経由地を通って移動します。途中で降りると、その場に取り残されるおそれがあります。自動で降ろされるまでお待ちください。<span class="en" lang="en">Stay seated during both the outward and return trips. The pad travels through waypoints; standing up midway may leave you behind. Wait until you are automatically unseated.</span></p>
+      <p><strong>戻るときは、着替えと忘れ物の確認を済ませてから。</strong><br>使用中のパッドをクリックして座ると、更衣室の片付けと帰還が始まります。<span class="en" lang="en">Finish changing and check your belongings before returning. Clicking and sitting on the pad while the room is in use starts room cleanup and the return trip.</span></p>
+    </aside>
+    <section id="howto" aria-labelledby="howto-title">
+      <div class="section-heading"><span class="number" aria-hidden="true">01</span><h2 id="howto-title">ご利用の流れ<span class="en" lang="en">How to use the room</span></h2></div>
+      <ol class="steps">
+        <li><h3>パッドに座って移動<span class="en" lang="en">Sit on the pad to travel</span></h3><p>利用可能なパッドをクリックして座ります。経由地でも立ち上がらず、到着するまでお待ちください。<span class="en" lang="en">Click an available pad to sit. Stay seated at each waypoint and wait for arrival.</span></p></li>
+        <li><h3>到着後に着替える<span class="en" lang="en">Change after arrival</span></h3><p>更衣室の展開後、自動で降ろされます。室内と足元を確認してから動き、着替えてください。<span class="en" lang="en">You will be automatically unseated after the room is rezzed. Check the room and your footing before moving and changing.</span></p></li>
+        <li><h3>同じパッドで戻る<span class="en" lang="en">Return using the same pad</span></h3><p>着替えを終え、持ち物を回収してからパッドをクリックして座ります。帰りも自動で降ろされるまでお待ちください。<span class="en" lang="en">Finish changing, collect your belongings, then click the pad to sit. Remain seated until automatically unseated at the starting point.</span></p><span class="return-label">クリックして座ると戻ります。<br><span lang="en">Click and sit to return.</span></span></li>
+      </ol>
+    </section>
+    <section id="safety" aria-labelledby="safety-title">
+      <div class="section-heading"><span class="number" aria-hidden="true">02</span><h2 id="safety-title">事故を防ぐための注意<span class="en" lang="en">Use the room safely</span></h2></div>
+      <div class="rules">
+        <article class="rule"><h3>着替える前に、今の服装を保存<span class="en" lang="en">Save your outfit before changing</span></h3><p>誤って脱いだり付け替えたりしたときに戻せるよう、必要に応じて現在のアウトフィットを保存してください。<span class="en" lang="en">Save your current outfit if needed so you can restore it after an accidental clothing or attachment change.</span></p></article>
+        <article class="rule"><h3>着替えは室内で行う<span class="en" lang="en">Stay inside while changing</span></h3><p>利用者が離れると、更衣室は自動的に片付けられます。室外へ離れたり、別の場所へテレポートしたりする前に、着替えと持ち物の回収を済ませてください。<span class="en" lang="en">The room is automatically removed when the user leaves. Finish changing and collect your belongings before leaving the room or teleporting elsewhere.</span></p></article>
+        <article class="rule"><h3>自分で置いた物は、自分で回収<span class="en" lang="en">Pick up objects you rez</span></h3><p>自分でRezした荷物や小物は、戻る前にインベントリへ回収してください。自動回収されるものとして扱わないでください。<span class="en" lang="en">Take any objects you rez back into your inventory before returning. Do not rely on the room's cleanup to collect them for you.</span></p></article>
+        <article class="rule"><h3>ここをホームや再ログイン先にしない<span class="en" lang="en">Avoid using this room as a login location</span></h3><p>更衣室は常設ではありません。ホームには設定せず、ログアウト前に戻ってください。切断後に「最後の場所」へ戻ると、更衣室がなくなっている場合があります。<span class="en" lang="en">This room is temporary. Do not set it as Home, and return before logging out. After a disconnect, logging in at your last location may place you where the room has already been removed.</span></p></article>
+      </div>
+      <aside class="note"><strong>誤ってパッドを操作しないようご注意ください。</strong><br>使用中のパッドは戻るための操作場所です。着替え途中の確認や、何となくのクリックで座らないようにしてください。<span class="en" lang="en">The pad is your return control while the room is in use. Avoid clicking and sitting on it unintentionally while changing.</span></aside>
+    </section>
+    <section id="manners" aria-labelledby="manners-title">
+      <div class="section-heading"><span class="number" aria-hidden="true">03</span><h2 id="manners-title">お互いのための利用マナー<span class="en" lang="en">Respect other users</span></h2></div>
+      <ul class="manners">
+        <li><strong>一室につきお一人で。同行者を室内へ呼ばないでください。</strong><span class="en" lang="en">Use each room alone. Please do not invite companions inside.</span></li>
+        <li><strong>ほかの更衣室への立ち入りや、カメラでの覗き見はおやめください。</strong><span class="en" lang="en">Do not enter other dressing rooms or use your camera to look inside them.</span></li>
+        <li><strong>他の利用者を無断で撮影・録画・配信しないでください。</strong><span class="en" lang="en">Do not photograph, record or stream other users without their permission.</span></li>
+        <li><strong>容姿や着替えへのからかい、干渉、迷惑行為はおやめください。</strong><span class="en" lang="en">Do not mock, interfere with or harass anyone over their appearance or changing.</span></li>
+        <li><strong>大きな音、連続したジェスチャー、過剰なエフェクトは控えてください。</strong><span class="en" lang="en">Keep loud sounds, repeated gestures and excessive effects to a minimum.</span></li>
+        <li><strong>着替えが済んだら戻り、長時間の放置や荷物の置きっぱなしはおやめください。</strong><span class="en" lang="en">Return when you have finished. Please avoid prolonged AFK use and do not leave belongings behind.</span></li>
+      </ul>
+      <aside class="note"><strong>プライバシーについて</strong><br>入室制限があっても、外部からの視線や撮影を完全に防げるとは限りません。お互いのプライバシーを尊重してご利用ください。<span class="en" lang="en">Entry restrictions do not guarantee complete protection from outside viewing or recording. Please respect everyone's privacy.</span></aside>
+    </section>
+    <section id="help" aria-labelledby="help-title">
+      <div class="section-heading"><span class="number" aria-hidden="true">04</span><h2 id="help-title">退避・困ったとき<span class="en" lang="en">Evacuation &amp; help</span></h2></div>
+      <div class="escape">
+        <div><h3>警告が出たら、速やかに退避<span class="en" lang="en">Leave promptly if you receive a warning</span></h3><p>ほかの方の更衣室に誤って入った場合は、すぐに退出してください。プライベートエリアの警告が出た場合は、案内に従って10秒以内に退避してください。<span class="en" lang="en">If you accidentally enter another user's room, leave immediately. If you receive a private-area warning, follow the instructions and leave within 10 seconds.</span></p></div>
+        <div class="destination"><small>退避先 / <span lang="en">Evacuation destination</span></small><strong class="coordinates" lang="en">Davros<br>(86, 100, 24)</strong><a class="button" href="https://maps.secondlife.com/secondlife/Davros/86/100/24">退避先の地図を開く<span class="en" lang="en">Open destination map</span></a></div>
+      </div>
+      <p class="trouble"><strong>移動しない・途中で降りた・戻れない場合</strong><br>むやみに操作を繰り返さず、安全な場所へ退避したうえで管理者へお知らせください。発生した状況と、そのときの表示内容を伝えると確認に役立ちます。<span class="en" lang="en">If the pad does not move, you become unseated midway, or you cannot return, avoid repeatedly trying controls. Move to safety and inform the administrator, including what happened and any messages shown.</span></p>
+    </section>
+  </main>
+  <footer class="wrap"><div class="footer-row"><span lang="en">JAPAN HIROBA · DRESSING ROOM GUIDE</span><a href="#top">ページ上部へ / <span lang="en">Back to top</span></a></div></footer>
+</body>
+</html>

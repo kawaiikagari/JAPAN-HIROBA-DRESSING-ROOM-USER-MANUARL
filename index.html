@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light">
   <title>更衣室ご利用案内 / Dressing Room Guide — JAPAN HIROBA</title>
   <style>
-    :root { --paper:#f6f5ef; --ink:#203d35; --muted:#52665e; --line:#d5ded5; --green:#24594a; --soft:#e9efe7; --gold:#87601e; --warm:#fff4db; --white:#fffefa; }
+    :root { --paper:#f7f9fb; --ink:#243b4d; --muted:#536576; --line:#d8e2e9; --green:#326184; --soft:#edf4f9; --gold:#8a743e; --warm:#f8f4e9; --white:#ffffff; --mint:#edf4f1; }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; scroll-padding-top:24px; }
     body { margin:0; background:var(--paper); color:var(--ink); font-family:"Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; line-height:1.85; }
@@ -17,23 +17,25 @@
     .skip { position:absolute; top:-100px; left:16px; background:var(--white); padding:12px; z-index:2; }
     .skip:focus { top:12px; }
     .wrap { width:min(1080px, calc(100% - 64px)); margin-inline:auto; }
-    header { border-bottom:1px solid var(--line); }
+    header { background:var(--white); border-top:3px solid var(--ink); border-bottom:1px solid var(--line); }
     .masthead { display:flex; justify-content:space-between; align-items:center; gap:24px; padding-block:22px; }
+    .brand-lockup { display:flex; align-items:center; gap:20px; min-width:0; }
+    .brand-logo { display:block; width:80px; height:80px; object-fit:contain; flex:0 0 auto; }
     .brand { font-family:Georgia, "Times New Roman", serif; font-size:20px; letter-spacing:.11em; line-height:1.4; }
-    .edition { color:var(--muted); font-size:12px; text-align:right; }
-    .hero { padding:64px 0 44px; display:grid; grid-template-columns:1fr 250px; gap:48px; align-items:end; }
+    .edition { color:var(--muted); font-size:11px; text-align:left; line-height:1.7; margin-top:5px; }
+    .hero { padding:42px 32px; margin:30px 0; display:grid; grid-template-columns:1fr 250px; gap:36px; align-items:end; border:1px solid var(--line); background:linear-gradient(90deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.88) 55%, rgba(255,255,255,.72) 100%), url("assets/closet-background.png") center 58% / cover no-repeat; background-attachment:scroll, fixed; }
     .eyebrow { margin:0 0 18px; color:var(--green); font-size:12px; letter-spacing:.15em; font-weight:700; }
     h1 { margin:0; font-family:"Yu Mincho", "Hiragino Mincho ProN", serif; font-size:clamp(30px, 4.2vw, 48px); font-weight:500; line-height:1.55; letter-spacing:.035em; }
     .subtitle { margin:16px 0 0; font-family:Georgia, serif; font-size:22px; line-height:1.5; }
     .intro { margin:20px 0 0; max-width:660px; }
     .en { display:block; color:var(--muted); font-size:.9em; line-height:1.7; margin-top:6px; font-weight:400; letter-spacing:normal; }
-    .hero-note { border-left:2px solid var(--green); padding:0 0 0 20px; font-size:14px; }
+    .hero-note { border-left:2px solid #9dbab0; background:rgba(255,255,255,.82); padding:14px 16px; font-size:14px; }
     .hero-note strong { display:block; font-size:16px; }
     nav { display:flex; flex-wrap:wrap; gap:8px 24px; padding:20px 0; margin-bottom:36px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
     nav a { font-size:13px; text-decoration:none; }
-    .priority { background:var(--green); color:var(--white); padding:30px 34px; border-radius:3px; }
+    .priority { background:#29465a; color:var(--white); padding:30px 34px; border-radius:0; }
     .priority h2 { margin:0 0 14px; font-size:21px; }
-    .priority .en { color:#e0eae2; }
+    .priority .en { color:#e2edf5; }
     .priority p { margin:0; }
     .priority p + p { margin-top:18px; padding-top:18px; border-top:1px solid #ffffff35; }
     section { padding:44px 0; border-bottom:1px solid var(--line); }
@@ -48,12 +50,12 @@
     .steps li { counter-increment:steps; padding:24px; background:var(--white); border:1px solid var(--line); }
     .steps li::before { content:"STEP 0" counter(steps); display:block; color:var(--green); font-size:11px; letter-spacing:.15em; margin-bottom:16px; font-weight:700; }
     .steps p { font-size:14px; }
-    .return-label { display:block; background:var(--soft); border-left:3px solid var(--green); padding:10px 12px; font-size:13px; line-height:1.65; margin-top:16px; }
+    .return-label { display:block; background:var(--mint); border-left:3px solid #8cae9f; padding:10px 12px; font-size:13px; line-height:1.65; margin-top:16px; }
     .rules { display:grid; grid-template-columns:1fr 1fr; gap:0 36px; }
     .rule { padding:22px 0; border-top:1px solid var(--line); }
     .rule p { font-size:14px; }
     .note { background:var(--warm); border-left:3px solid var(--gold); padding:20px 24px; margin-top:26px; font-size:14px; }
-    .note strong { color:#684715; }
+    .note strong { color:#67552d; }
     .manners { padding:0; margin:0; list-style:none; }
     .manners li { position:relative; padding:16px 0 16px 24px; border-top:1px solid var(--line); }
     .manners li::before { content:""; position:absolute; left:2px; top:29px; width:6px; height:6px; border-radius:50%; background:var(--green); }
@@ -63,7 +65,7 @@
     .destination small { display:block; color:var(--muted); }
     .coordinates { display:block; font-family:Georgia, serif; font-size:28px; margin:6px 0 16px; line-height:1.4; }
     .button { display:block; padding:12px 14px; background:var(--green); color:white; text-decoration:none; text-align:center; font-size:14px; line-height:1.6; border-radius:3px; }
-    .button:hover { background:#193f34; }
+    .button:hover { background:#254b68; }
     .button .en { color:white; margin-top:0; font-size:12px; }
     .trouble { margin-top:24px; font-size:14px; }
     footer { padding:28px 0 40px; color:var(--muted); font-size:12px; }
@@ -71,9 +73,12 @@
     @media (max-width:760px) {
       .wrap { width:calc(100% - 36px); }
       .masthead { gap:12px; }
+      .brand-lockup { gap:14px; }
+      .brand-logo { width:64px; height:64px; }
       .brand { font-size:16px; }
       .edition { font-size:10px; }
-      .hero { grid-template-columns:1fr; gap:26px; padding:38px 0 30px; }
+      .hero { grid-template-columns:1fr; gap:26px; padding:28px 22px; margin:24px 0; background:linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.87)), url("assets/closet-background.png") 68% center / cover no-repeat; background-attachment:scroll, fixed; }
+      h1 { font-size:clamp(23px, 6.6vw, 30px); letter-spacing:.02em; }
       .hero-note { max-width:100%; }
       .subtitle { font-size:20px; }
       nav { gap:12px 20px; margin-bottom:26px; }
@@ -92,7 +97,9 @@
     @media print {
       body { background:white; font-size:10pt; }
       .wrap { width:100%; }
-      .hero { padding-top:20px; grid-template-columns:1fr; gap:16px; }
+      header { border-top:0; }
+      .brand-logo { width:60px; height:60px; }
+      .hero { padding:20px 0; margin:0; grid-template-columns:1fr; gap:16px; background:none; border:0; }
       h1 { font-size:26pt; }
       nav, .skip { display:none; }
       section { padding-block:22px; }
@@ -110,8 +117,13 @@
   <a class="skip" href="#main">本文へ / <span lang="en">Skip to content</span></a>
   <header>
     <div class="wrap masthead">
-      <div class="brand" lang="en">JAPAN HIROBA</div>
-      <div class="edition">更衣室ご利用案内<br><span lang="en">DRESSING ROOM GUIDE · JA / EN</span></div>
+      <div class="brand-lockup">
+        <img class="brand-logo" src="SSJ%20Logo.jpg" width="400" height="400" alt="Support Staff JAPAN（SSJ）ロゴ" decoding="async">
+        <div>
+          <div class="brand" lang="en">JAPAN HIROBA</div>
+          <div class="edition">更衣室ご利用案内<br><span lang="en">DRESSING ROOM GUIDE · JA / EN</span></div>
+        </div>
+      </div>
     </div>
   </header>
   <main class="wrap" id="main">

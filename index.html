@@ -6,6 +6,36 @@
   <meta name="description" content="JAPAN HIROBAの更衣室ご利用案内。安全な移動、戻る操作、忘れ物とプライバシーに関する注意事項を日本語・英語でご案内します。">
   <meta name="color-scheme" content="light">
   <title>更衣室ご利用案内 / Dressing Room Guide — JAPAN HIROBA</title>
+  <script>
+    (() => {
+      const supported = ['auto', 'ja', 'en'];
+      let preference = 'auto';
+      try { preference = localStorage.getItem('dressing-room-language') || 'auto'; } catch {}
+      if (!supported.includes(preference)) preference = 'auto';
+      const browserLanguage = () => /^ja(?:-|$)/i.test(navigator.languages?.[0] || navigator.language || 'en') ? 'ja' : 'en';
+      const apply = value => {
+        const language = value === 'auto' ? browserLanguage() : value;
+        document.documentElement.lang = language;
+        document.documentElement.dataset.pageLanguage = language;
+        document.title = language === 'ja' ? '更衣室ご利用案内 — JAPAN HIROBA' : 'Dressing Room Guide — JAPAN HIROBA';
+        document.querySelector('meta[name="description"]').content = language === 'ja'
+          ? 'JAPAN HIROBAの更衣室ご利用案内。安全な移動、戻る操作、忘れ物とプライバシーに関する注意事項をご案内します。'
+          : 'JAPAN HIROBA Dressing Room Guide: safe travel, return controls, belongings, privacy and etiquette.';
+      };
+      apply(preference);
+      window.dressingRoomLanguage = { get preference() { return preference; }, apply,
+        set(value) {
+          preference = supported.includes(value) ? value : 'auto';
+          try {
+            if (preference === 'auto') localStorage.removeItem('dressing-room-language');
+            else localStorage.setItem('dressing-room-language', preference);
+          } catch {}
+          apply(preference);
+        }
+      };
+      window.addEventListener('languagechange', () => { if (preference === 'auto') apply('auto'); });
+    })();
+  </script>
   <style>
     :root { --paper:#fff8ed; --ink:#463a34; --muted:#6e625a; --line:#dfcfc5; --green:#79505a; --soft:#efd9dc; --gold:#8a7045; --warm:#f5e8c9; --white:#fffdf9; --mint:#e2ebda; --menu-height:66px; }
     * { box-sizing:border-box; }
@@ -73,6 +103,13 @@
     .trouble { margin-top:24px; font-size:14px; }
     footer { padding:28px 24px 40px; background:var(--paper); color:var(--muted); font-size:12px; }
     .footer-row { display:flex; justify-content:space-between; gap:20px; }
+    html[data-page-language="ja"] [data-language="en"],
+    html[data-page-language="en"] [data-language="ja"] { display:none !important; }
+    html[data-page-language="en"] .en { color:inherit; font-size:inherit; font-weight:inherit; line-height:inherit; margin-top:0; }
+    .language-control { display:none; flex-wrap:wrap; align-items:center; gap:8px; margin-left:auto; font-size:13px; }
+    html[data-page-language] .language-control { display:flex; }
+    .language-control select { max-width:100%; min-height:32px; padding:4px 8px; border:1px solid var(--line); border-radius:3px; background:var(--white); color:var(--ink); font:inherit; }
+    .language-control select:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
     @media (max-width:760px) {
       :root { --menu-height:204px; }
       .wrap { width:calc(100% - 36px); }
@@ -120,21 +157,21 @@
   </style>
 </head>
 <body id="top">
-  <a class="skip" href="#main">本文へ / <span lang="en">Skip to content</span></a>
+  <a class="skip" href="#main"><span lang="ja" data-language="ja">本文へ</span><span lang="en" data-language="en">Skip to content</span></a>
   <nav class="wrap" aria-label="ページ内案内 / Page navigation">
-    <a href="#safety">注意事項 / <span lang="en">Safety</span></a>
-    <a href="#howto">使い方 / <span lang="en">How to use</span></a>
-    <a href="#manners">利用マナー / <span lang="en">Etiquette</span></a>
-    <a href="#help">退避・困ったとき / <span lang="en">Help</span></a>
-    <a href="#top">ページトップへ / <span lang="en">Back to top</span></a>
-  </nav>
+    <a href="#safety"><span lang="ja" data-language="ja">注意事項</span><span lang="en" data-language="en">Safety</span></a>
+    <a href="#howto"><span lang="ja" data-language="ja">使い方</span><span lang="en" data-language="en">How to use</span></a>
+    <a href="#manners"><span lang="ja" data-language="ja">利用マナー</span><span lang="en" data-language="en">Etiquette</span></a>
+    <a href="#help"><span lang="ja" data-language="ja">退避・困ったとき</span><span lang="en" data-language="en">Help</span></a>
+    <a href="#top"><span lang="ja" data-language="ja">ページトップへ</span><span lang="en" data-language="en">Back to top</span></a>
+  <label class="language-control"><span lang="ja" data-language="ja">表示言語</span><span lang="en" data-language="en">Language</span><select id="language-select"><option value="auto">自動 / Auto</option><option value="ja">日本語</option><option value="en">English</option></select></label></nav>
   <header>
     <div class="wrap masthead">
       <div class="brand-lockup">
         <img class="brand-logo" src="SSJ%20Logo.jpg" width="400" height="400" alt="Support Staff JAPAN（SSJ）ロゴ" decoding="async">
         <div>
           <div class="brand" lang="en">JAPAN HIROBA</div>
-          <div class="edition">更衣室ご利用案内<br><span lang="en">DRESSING ROOM GUIDE · JA / EN</span></div>
+          <div class="edition"><span lang="ja" data-language="ja">更衣室ご利用案内</span><span lang="en" data-language="en">DRESSING ROOM GUIDE</span></div>
         </div>
       </div>
     </div>
@@ -142,70 +179,84 @@
   <main class="wrap" id="main">
     <div class="hero">
       <div>
-        <p class="eyebrow" lang="en">SAFETY &amp; ETIQUETTE</p>
-        <h1>気持ちよく、安心して<br>着替えるために。</h1>
-        <p class="subtitle" lang="en">A little care. A comfortable change.</p>
-        <p class="intro">縫いぐるみ（パッド）で利用する、一時設置型の更衣室です。事故や操作間違いを防ぎ、お互いのプライバシーを守るため、ご利用前にお読みください。<span class="en" lang="en">These temporary dressing rooms are accessed by a stuffed toy (pad). Please read this guide before use to help prevent accidents and respect everyone's privacy.</span></p>
+        <p class="eyebrow"><span lang="ja" data-language="ja">注意事項・利用マナー</span><span lang="en" data-language="en">SAFETY &amp; ETIQUETTE</span></p>
+        <h1><span lang="ja" data-language="ja">気持ちよく、安心して<br>着替えるために。</span><span lang="en" data-language="en">A little care.<br>A comfortable change.</span></h1>
+        <p class="subtitle" lang="en"><span lang="ja" data-language="ja">更衣室ご利用案内</span><span lang="en" data-language="en">Dressing Room Guide</span></p>
+        <p class="intro"><span lang="ja" data-language="ja">縫いぐるみ（パッド）で利用する、一時設置型の更衣室です。事故や操作間違いを防ぎ、お互いのプライバシーを守るため、ご利用前にお読みください。</span><span class="en" lang="en" data-language="en">These temporary dressing rooms are accessed by a stuffed toy (pad). Please read this guide before use to help prevent accidents and respect everyone's privacy.</span></p>
       </div>
       <aside class="hero-note">
-        <strong>お一人ずつご利用ください。</strong>
-        <span class="en" lang="en">One person per room.</span>
-        <p style="margin-top:12px">ほかの方が使用中の更衣室には入らないでください。<span class="en" lang="en">Please do not enter a room being used by someone else.</span></p>
+        <strong data-language="ja">お一人ずつご利用ください。</strong>
+        <span class="en" lang="en" data-language="en"><strong>One person per room.</strong></span>
+        <p style="margin-top:12px"><span lang="ja" data-language="ja">ほかの方が使用中の更衣室には入らないでください。</span><span class="en" lang="en" data-language="en">Please do not enter a room being used by someone else.</span></p>
       </aside>
     </div>
     <aside class="priority" aria-labelledby="essential-title">
-      <h2 id="essential-title">まず、この4つをお守りください。<span class="en" lang="en">Four things to remember.</span></h2>
-      <p><strong>更衣室をホームや再ログイン先にしないでください。</strong><br>ログアウト前に待機場所へ戻ってください。室内で切断された場合は「最後の場所」を避け、安全なホームなどへログインしてください。<span class="en" lang="en">Do not set the dressing room as Home or use it as a login location. Return to the starting area before logging out. If you disconnect inside, do not log in at your last location; choose a safe Home or another safe location instead.</span></p>
-      <p><strong>更衣室内でランドクリックTPを使わないでください。</strong><br>指定のランディングポイントへ移動してしまいます。<span class="en" lang="en">Do not use click-to-teleport on the floor or land inside the dressing room. You will be sent to the designated landing point.</span></p>
-      <p><strong>行きも戻りも、移動中は立ち上がらないでください。</strong><br>経由地を通って移動します。途中で降りると、その場に取り残されるおそれがあります。自動で降ろされるまでお待ちください。<span class="en" lang="en">Stay seated during both the outward and return trips. The stuffed toy (pad) travels through waypoints; standing up midway may leave you behind. Wait until you are automatically unseated.</span></p>
-      <p><strong>戻るときは、着替えと忘れ物の確認を済ませてから。</strong><br>使用中の縫いぐるみ（パッド）をクリックして座ると、更衣室の片付けと帰還が始まります。<span class="en" lang="en">Finish changing and check your belongings before returning. Clicking and sitting on the stuffed toy (pad) while the room is in use starts room cleanup and the return trip.</span></p>
+      <h2 id="essential-title"><span lang="ja" data-language="ja">まず、この4つをお守りください。</span><span class="en" lang="en" data-language="en">Four things to remember.</span></h2>
+      <p><span lang="ja" data-language="ja"><strong>更衣室をホームや再ログイン先にしないでください。</strong><br>ログアウト前に待機場所へ戻ってください。室内で切断された場合は「最後の場所」を避け、安全なホームなどへログインしてください。</span><span class="en" lang="en" data-language="en"><strong>Do not set the dressing room as Home or use it as a login location.</strong><br>Return to the starting area before logging out. If you disconnect inside, do not log in at your last location; choose a safe Home or another safe location instead.</span></p>
+      <p><span lang="ja" data-language="ja"><strong>更衣室内でランドクリックTPを使わないでください。</strong><br>指定のランディングポイントへ移動してしまいます。</span><span class="en" lang="en" data-language="en"><strong>Do not use click-to-teleport on the floor or land inside the dressing room.</strong><br>You will be sent to the designated landing point.</span></p>
+      <p><span lang="ja" data-language="ja"><strong>行きも戻りも、移動中は立ち上がらないでください。</strong><br>経由地を通って移動します。途中で降りると、その場に取り残されるおそれがあります。自動で降ろされるまでお待ちください。</span><span class="en" lang="en" data-language="en"><strong>Stay seated during both the outward and return trips.</strong><br>The stuffed toy (pad) travels through waypoints; standing up midway may leave you behind. Wait until you are automatically unseated.</span></p>
+      <p><span lang="ja" data-language="ja"><strong>戻るときは、着替えと忘れ物の確認を済ませてから。</strong><br>使用中の縫いぐるみ（パッド）をクリックして座ると、更衣室の片付けと帰還が始まります。</span><span class="en" lang="en" data-language="en"><strong>Finish changing and check your belongings before returning.</strong><br>Clicking and sitting on the stuffed toy (pad) while the room is in use starts room cleanup and the return trip.</span></p>
     </aside>
     <section id="safety" aria-labelledby="safety-title">
-      <div class="section-heading"><span class="number" aria-hidden="true">01</span><h2 id="safety-title">事故を防ぐための注意<span class="en" lang="en">Use the room safely</span></h2></div>
+      <div class="section-heading"><span class="number" aria-hidden="true">01</span><h2 id="safety-title"><span lang="ja" data-language="ja">事故を防ぐための注意</span><span class="en" lang="en" data-language="en">Use the room safely</span></h2></div>
       <div class="rules">
-        <article class="rule"><h3>ここをホームや再ログイン先にしない<span class="en" lang="en">Do not use this room as Home or a login location</span></h3><p><strong>更衣室は一時設置です。ホームには設定せず、ログアウト前に縫いぐるみ（パッド）で待機場所へ戻ってください。</strong><br>室内で切断された場合は「最後の場所」を避け、安全なホームなどへログインしてください。ここへ再ログインすると、安全な足場を確保できないおそれがあります。<br><strong>更衣室内でランドクリックTPを使わないでください。</strong> 指定のランディングポイントへ移動してしまいます。<span class="en" lang="en">This room is temporary. Do not set it as Home. Use the stuffed toy (pad) to return to the starting area before logging out. If you disconnect inside, do not log in at your last location; choose a safe Home or another safe location instead. Logging back in here may leave you without safe footing. Do not use click-to-teleport on the floor or land inside the dressing room. You will be sent to the designated landing point.</span></p></article>
-        <article class="rule"><h3>着替えは室内で行う<span class="en" lang="en">Stay inside while changing</span></h3><p>利用者が離れると、更衣室は自動的に片付けられます。室外へ離れたり、別の場所へテレポートしたりする前に、着替えと持ち物の回収を済ませてください。<span class="en" lang="en">The room is automatically removed when the user leaves. Finish changing and collect your belongings before leaving the room or teleporting elsewhere.</span></p></article>
-        <article class="rule"><h3>自分で置いた物は、自分で回収<span class="en" lang="en">Pick up objects you rez</span></h3><p>自分でRezした荷物や小物は、戻る前にインベントリへ回収してください。自動回収されるものとして扱わないでください。<span class="en" lang="en">Take any objects you rez back into your inventory before returning. Do not rely on the room's cleanup to collect them for you.</span></p></article>
-        <article class="rule"><h3>着替える前に、今の服装を保存<span class="en" lang="en">Save your outfit before changing</span></h3><p>誤って脱いだり付け替えたりしたときに戻せるよう、必要に応じて現在のアウトフィットを保存してください。<span class="en" lang="en">Save your current outfit if needed so you can restore it after an accidental clothing or attachment change.</span></p></article>
+        <article class="rule"><h3><span lang="ja" data-language="ja">ここをホームや再ログイン先にしない</span><span class="en" lang="en" data-language="en">Do not use this room as Home or a login location</span></h3><p><span lang="ja" data-language="ja"><strong>更衣室は一時設置です。ホームには設定せず、ログアウト前に縫いぐるみ（パッド）で待機場所へ戻ってください。</strong><br>室内で切断された場合は「最後の場所」を避け、安全なホームなどへログインしてください。ここへ再ログインすると、安全な足場を確保できないおそれがあります。<br><strong>更衣室内でランドクリックTPを使わないでください。</strong> 指定のランディングポイントへ移動してしまいます。</span><span class="en" lang="en" data-language="en">This room is temporary. Do not set it as Home. Use the stuffed toy (pad) to return to the starting area before logging out. If you disconnect inside, do not log in at your last location; choose a safe Home or another safe location instead. Logging back in here may leave you without safe footing. Do not use click-to-teleport on the floor or land inside the dressing room. You will be sent to the designated landing point.</span></p></article>
+        <article class="rule"><h3><span lang="ja" data-language="ja">着替えは室内で行う</span><span class="en" lang="en" data-language="en">Stay inside while changing</span></h3><p><span lang="ja" data-language="ja">利用者が離れると、更衣室は自動的に片付けられます。室外へ離れたり、別の場所へテレポートしたりする前に、着替えと持ち物の回収を済ませてください。</span><span class="en" lang="en" data-language="en">The room is automatically removed when the user leaves. Finish changing and collect your belongings before leaving the room or teleporting elsewhere.</span></p></article>
+        <article class="rule"><h3><span lang="ja" data-language="ja">自分で置いた物は、自分で回収</span><span class="en" lang="en" data-language="en">Pick up objects you rez</span></h3><p><span lang="ja" data-language="ja">自分でRezした荷物や小物は、戻る前にインベントリへ回収してください。自動回収されるものとして扱わないでください。</span><span class="en" lang="en" data-language="en">Take any objects you rez back into your inventory before returning. Do not rely on the room's cleanup to collect them for you.</span></p></article>
+        <article class="rule"><h3><span lang="ja" data-language="ja">着替える前に、今の服装を保存</span><span class="en" lang="en" data-language="en">Save your outfit before changing</span></h3><p><span lang="ja" data-language="ja">誤って脱いだり付け替えたりしたときに戻せるよう、必要に応じて現在のアウトフィットを保存してください。</span><span class="en" lang="en" data-language="en">Save your current outfit if needed so you can restore it after an accidental clothing or attachment change.</span></p></article>
       </div>
-      <aside class="note"><strong>誤って縫いぐるみ（パッド）を操作しないようご注意ください。</strong><br>使用中の縫いぐるみ（パッド）は戻るための操作場所です。着替え途中の確認や、何となくのクリックで座らないようにしてください。<span class="en" lang="en">The stuffed toy (pad) is your return control while the room is in use. Avoid clicking and sitting on it unintentionally while changing.</span></aside>
+      <aside class="note"><span lang="ja" data-language="ja"><strong>誤って縫いぐるみ（パッド）を操作しないようご注意ください。</strong><br>使用中の縫いぐるみ（パッド）は戻るための操作場所です。着替え途中の確認や、何となくのクリックで座らないようにしてください。</span><span class="en" lang="en" data-language="en"><strong>Avoid operating the stuffed toy (pad) by accident.</strong><br>The stuffed toy (pad) is your return control while the room is in use. Avoid clicking and sitting on it unintentionally while changing.</span></aside>
     </section>
     <section id="howto" aria-labelledby="howto-title">
-      <div class="section-heading"><span class="number" aria-hidden="true">02</span><h2 id="howto-title">ご利用の流れ<span class="en" lang="en">How to use the room</span></h2></div>
+      <div class="section-heading"><span class="number" aria-hidden="true">02</span><h2 id="howto-title"><span lang="ja" data-language="ja">ご利用の流れ</span><span class="en" lang="en" data-language="en">How to use the room</span></h2></div>
       <ol class="steps">
-        <li><h3>縫いぐるみ（パッド）に座って移動<span class="en" lang="en">Sit on the stuffed toy (pad) to travel</span></h3><p>利用可能な縫いぐるみ（パッド）をクリックして座ります。経由地でも立ち上がらず、到着するまでお待ちください。<span class="en" lang="en">Click an available stuffed toy (pad) to sit. Stay seated at each waypoint and wait for arrival.</span></p></li>
-        <li><h3>到着後に着替える<span class="en" lang="en">Change after arrival</span></h3><p>更衣室の展開後、自動で降ろされます。室内と足元を確認してから動き、着替えてください。<span class="en" lang="en">You will be automatically unseated after the room is rezzed. Check the room and your footing before moving and changing.</span></p></li>
-        <li><h3>同じ縫いぐるみ（パッド）で戻る<span class="en" lang="en">Return using the same stuffed toy (pad)</span></h3><p>着替えを終え、持ち物を回収してから縫いぐるみ（パッド）をクリックして座ります。帰りも自動で降ろされるまでお待ちください。<span class="en" lang="en">Finish changing, collect your belongings, then click the stuffed toy (pad) to sit. Remain seated until automatically unseated at the starting point.</span></p><span class="return-label">縫いぐるみ（パッド）をクリックして座ると、待機場所へ戻ります。<br><span lang="en">Click the stuffed toy (pad) to sit and return to the waiting area.</span></span></li>
+        <li><h3><span lang="ja" data-language="ja">縫いぐるみ（パッド）に座って移動</span><span class="en" lang="en" data-language="en">Sit on the stuffed toy (pad) to travel</span></h3><p><span lang="ja" data-language="ja">利用可能な縫いぐるみ（パッド）をクリックして座ります。経由地でも立ち上がらず、到着するまでお待ちください。</span><span class="en" lang="en" data-language="en">Click an available stuffed toy (pad) to sit. Stay seated at each waypoint and wait for arrival.</span></p></li>
+        <li><h3><span lang="ja" data-language="ja">到着後に着替える</span><span class="en" lang="en" data-language="en">Change after arrival</span></h3><p><span lang="ja" data-language="ja">更衣室の展開後、自動で降ろされます。室内と足元を確認してから動き、着替えてください。</span><span class="en" lang="en" data-language="en">You will be automatically unseated after the room is rezzed. Check the room and your footing before moving and changing.</span></p></li>
+        <li><h3><span lang="ja" data-language="ja">同じ縫いぐるみ（パッド）で戻る</span><span class="en" lang="en" data-language="en">Return using the same stuffed toy (pad)</span></h3><p><span lang="ja" data-language="ja">着替えを終え、持ち物を回収してから縫いぐるみ（パッド）をクリックして座ります。帰りも自動で降ろされるまでお待ちください。</span><span class="en" lang="en" data-language="en">Finish changing, collect your belongings, then click the stuffed toy (pad) to sit. Remain seated until automatically unseated at the starting point.</span></p><span class="return-label"><span lang="ja" data-language="ja">縫いぐるみ（パッド）をクリックして座ると、待機場所へ戻ります。</span><span lang="en" data-language="en">Click the stuffed toy (pad) to sit and return to the waiting area.</span></span></li>
       </ol>
     </section>
     <section id="manners" aria-labelledby="manners-title">
-      <div class="section-heading"><span class="number" aria-hidden="true">03</span><h2 id="manners-title">お互いのための利用マナー<span class="en" lang="en">Respect other users</span></h2></div>
+      <div class="section-heading"><span class="number" aria-hidden="true">03</span><h2 id="manners-title"><span lang="ja" data-language="ja">お互いのための利用マナー</span><span class="en" lang="en" data-language="en">Respect other users</span></h2></div>
       <ul class="manners">
-        <li><strong>一室につきお一人で。同行者を室内へ呼ばないでください。</strong><span class="en" lang="en">Use each room alone. Please do not invite companions inside.</span></li>
-        <li><strong>ほかの更衣室への立ち入りや、カメラでの覗き見はおやめください。</strong><span class="en" lang="en">Do not enter other dressing rooms or use your camera to look inside them.</span></li>
-        <li><strong>他の利用者を無断で撮影・録画・配信しないでください。</strong><span class="en" lang="en">Do not photograph, record or stream other users without their permission.</span></li>
-        <li><strong>容姿や着替えへのからかい、干渉、迷惑行為はおやめください。</strong><span class="en" lang="en">Do not mock, interfere with or harass anyone over their appearance or changing.</span></li>
-        <li><strong>大きな音、連続したジェスチャー、過剰なエフェクトは控えてください。</strong><span class="en" lang="en">Keep loud sounds, repeated gestures and excessive effects to a minimum.</span></li>
-        <li><strong>着替えが済んだら戻り、長時間の放置や荷物の置きっぱなしはおやめください。</strong><span class="en" lang="en">Return when you have finished. Please avoid prolonged AFK use and do not leave belongings behind.</span></li>
+        <li><span lang="ja" data-language="ja"><strong>一室につきお一人で。同行者を室内へ呼ばないでください。</strong></span><span class="en" lang="en" data-language="en">Use each room alone. Please do not invite companions inside.</span></li>
+        <li><span lang="ja" data-language="ja"><strong>ほかの更衣室への立ち入りや、カメラでの覗き見はおやめください。</strong></span><span class="en" lang="en" data-language="en">Do not enter other dressing rooms or use your camera to look inside them.</span></li>
+        <li><span lang="ja" data-language="ja"><strong>他の利用者を無断で撮影・録画・配信しないでください。</strong></span><span class="en" lang="en" data-language="en">Do not photograph, record or stream other users without their permission.</span></li>
+        <li><span lang="ja" data-language="ja"><strong>容姿や着替えへのからかい、干渉、迷惑行為はおやめください。</strong></span><span class="en" lang="en" data-language="en">Do not mock, interfere with or harass anyone over their appearance or changing.</span></li>
+        <li><span lang="ja" data-language="ja"><strong>大きな音、連続したジェスチャー、過剰なエフェクトは控えてください。</strong></span><span class="en" lang="en" data-language="en">Keep loud sounds, repeated gestures and excessive effects to a minimum.</span></li>
+        <li><span lang="ja" data-language="ja"><strong>着替えが済んだら戻り、長時間の放置や荷物の置きっぱなしはおやめください。</strong></span><span class="en" lang="en" data-language="en">Return when you have finished. Please avoid prolonged AFK use and do not leave belongings behind.</span></li>
       </ul>
-      <aside class="note"><strong>悪質な覗き見や、他の利用者の更衣室への故意の侵入には、厳正に対処いたします。</strong><span class="en" lang="en">Malicious peeping or deliberate unauthorized entry into another user's dressing room will be dealt with firmly.</span></aside>
-      <aside class="note"><strong>プライバシーについて</strong><br>入室制限があっても、外部からの視線や撮影を完全に防げるとは限りません。お互いのプライバシーを尊重してご利用ください。<span class="en" lang="en">Entry restrictions do not guarantee complete protection from outside viewing or recording. Please respect everyone's privacy.</span></aside>
+      <aside class="note"><span lang="ja" data-language="ja"><strong>悪質な覗き見や、他の利用者の更衣室への故意の侵入には、厳正に対処いたします。</strong></span><span class="en" lang="en" data-language="en">Malicious peeping or deliberate unauthorized entry into another user's dressing room will be dealt with firmly.</span></aside>
+      <aside class="note"><span lang="ja" data-language="ja"><strong>プライバシーについて</strong><br>入室制限があっても、外部からの視線や撮影を完全に防げるとは限りません。お互いのプライバシーを尊重してご利用ください。</span><span class="en" lang="en" data-language="en"><strong>Privacy</strong><br>Entry restrictions do not guarantee complete protection from outside viewing or recording. Please respect everyone's privacy.</span></aside>
     </section>
     <section id="help" aria-labelledby="help-title">
-      <div class="section-heading"><span class="number" aria-hidden="true">04</span><h2 id="help-title">退避・困ったとき<span class="en" lang="en">Evacuation &amp; help</span></h2></div>
+      <div class="section-heading"><span class="number" aria-hidden="true">04</span><h2 id="help-title"><span lang="ja" data-language="ja">退避・困ったとき</span><span class="en" lang="en" data-language="en">Evacuation &amp; help</span></h2></div>
       <div class="escape">
-        <div><h3>警告が出たら、速やかに退避<span class="en" lang="en">Leave promptly if you receive a warning</span></h3><p>ほかの方の更衣室に誤って入った場合は、すぐに退出してください。プライベートエリアの警告が出た場合は、案内に従って10秒以内に退避してください。<span class="en" lang="en">If you accidentally enter another user's room, leave immediately. If you receive a private-area warning, follow the instructions and leave within 10 seconds.</span></p></div>
-        <div class="destination"><small>退避先 / <span lang="en">Evacuation destination</span></small><p><strong>縫いぐるみ（パッド）待機場所</strong><span class="en" lang="en">Stuffed toy (pad) waiting area</span></p><strong class="coordinates" lang="en">Davros<br>(86, 100, 24)</strong><a class="button" href="https://maps.secondlife.com/secondlife/Davros/86/100/24">待機場所の地図を開く<span class="en" lang="en">Open waiting area map</span></a></div>
+        <div><h3><span lang="ja" data-language="ja">警告が出たら、速やかに退避</span><span class="en" lang="en" data-language="en">Leave promptly if you receive a warning</span></h3><p><span lang="ja" data-language="ja">ほかの方の更衣室に誤って入った場合は、すぐに退出してください。プライベートエリアの警告が出た場合は、案内に従って10秒以内に退避してください。</span><span class="en" lang="en" data-language="en">If you accidentally enter another user's room, leave immediately. If you receive a private-area warning, follow the instructions and leave within 10 seconds.</span></p></div>
+        <div class="destination"><small><span lang="ja" data-language="ja">退避先</span><span lang="en" data-language="en">Evacuation destination</span></small><p><span lang="ja" data-language="ja"><strong>縫いぐるみ（パッド）待機場所</strong></span><span class="en" lang="en" data-language="en">Stuffed toy (pad) waiting area</span></p><strong class="coordinates" lang="en">Davros<br>(86, 100, 24)</strong><a class="button" href="https://maps.secondlife.com/secondlife/Davros/86/100/24"><span lang="ja" data-language="ja">待機場所の地図を開く</span><span class="en" lang="en" data-language="en">Open waiting area map</span></a></div>
       </div>
-      <p class="trouble"><strong>移動しない・途中で降りた・戻れない場合</strong><br>むやみに操作を繰り返さず、安全な場所へ退避したうえで管理者へお知らせください。発生した状況と、そのときの表示内容を伝えると確認に役立ちます。<span class="en" lang="en">If the stuffed toy (pad) does not move, you become unseated midway, or you cannot return, avoid repeatedly trying controls. Move to safety and inform the administrator, including what happened and any messages shown.</span></p>
+      <p class="trouble"><span lang="ja" data-language="ja"><strong>移動しない・途中で降りた・戻れない場合</strong><br>むやみに操作を繰り返さず、安全な場所へ退避したうえで管理者へお知らせください。発生した状況と、そのときの表示内容を伝えると確認に役立ちます。</span><span class="en" lang="en" data-language="en"><strong>If travel stops, you become unseated, or you cannot return</strong><br>If the stuffed toy (pad) does not move, you become unseated midway, or you cannot return, avoid repeatedly trying controls. Move to safety and inform the administrator, including what happened and any messages shown.</span></p>
     </section>
   </main>
-  <footer class="wrap"><div class="footer-row"><span lang="en">JAPAN HIROBA · DRESSING ROOM GUIDE</span><a href="#top">ページ上部へ / <span lang="en">Back to top</span></a></div></footer>
+  <footer class="wrap"><div class="footer-row"><span lang="en">JAPAN HIROBA · DRESSING ROOM GUIDE</span><a href="#top"><span lang="ja" data-language="ja">ページ上部へ</span><span lang="en" data-language="en">Back to top</span></a></div></footer>
   <script>
     const menu = document.querySelector('nav');
+    const languageSelect = document.querySelector('#language-select');
+    languageSelect.value = window.dressingRoomLanguage.preference;
     const updateMenuHeight = () => {
       document.documentElement.style.setProperty('--menu-height', `${menu.getBoundingClientRect().height}px`);
     };
+    const updateLabels = () => {
+      const japanese = document.documentElement.lang === 'ja';
+      menu.setAttribute('aria-label', japanese ? 'ページ内案内' : 'Page navigation');
+      document.querySelector('.brand-logo').alt = japanese ? 'Support Staff JAPAN（SSJ）ロゴ' : 'Support Staff JAPAN (SSJ) logo';
+    };
+    languageSelect.addEventListener('change', () => {
+      window.dressingRoomLanguage.set(languageSelect.value);
+      updateLabels();
+      updateMenuHeight();
+    });
+    window.addEventListener('languagechange', updateLabels);
+    updateLabels();
     updateMenuHeight();
     new ResizeObserver(updateMenuHeight).observe(menu);
   </script>
